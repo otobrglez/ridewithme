@@ -55,8 +55,11 @@ namespace :groups do
     end
   end
 
+end
+
+namespace :fetch do
   desc "Fetch feed by id"
-  task :fetch_feed, [:id] => :environment do |task, options|
+  task :one, [:id] => :environment do |task, options|
     id = options[:id]
 
     CSV.open(Rails.root.join(Group::GROUP_FEED % id), "wb", force_quotes: true) do |c|
@@ -68,7 +71,7 @@ namespace :groups do
   end
 
   desc "Fetch all feeds"
-  task :fetch_feeds => :environment do
+  task :all => :environment do
     Group.all do |g|
       id = g.id
       CSV.open(Rails.root.join(Group::GROUP_FEED % id), "wb", force_quotes: true) do |c|
@@ -85,5 +88,4 @@ namespace :groups do
       end
     end
   end
-
 end

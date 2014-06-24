@@ -13,7 +13,6 @@ class Group < OpenStruct
   def feed
     feed = Graph.get_connections(id, "feed", limit: 200)
     api_error = false
-    # page_count = 0
 
     begin
       feed.each do |i|
@@ -22,12 +21,11 @@ class Group < OpenStruct
 
       begin
         feed = feed.next_page
-        # page_count += 1
       rescue Exception => e
         api_error = true
       end
 
-    end while api_error != true # and page_count < 1
+    end while api_error != true
   end
 
   def process_item item
